@@ -2,18 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.css";
 import {
   faBed,
-  faCalendarDays,
   faCar,
-  faPerson,
   faPlane,
   faTaxi,
 } from "@fortawesome/free-solid-svg-icons";
 import Buttons from "../Button/Buttons";
 import { useState } from "react";
-import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
+import Header_Search_Options from "./Header_Search_Options";
+import Header_Search_Date from "./Header_Search_Date";
+import Header_Search_Where from "./Header_Search_Where";
 
 const Header = () => {
   const [openDate, setOpenDate] = useState(false);
@@ -24,6 +24,21 @@ const Header = () => {
       key: "selection",
     },
   ]);
+  const [openOptions, setOpenOptions] = useState(false);
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+
+  const handleChange = (type, op) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [type]: op === "i" ? options[type] + 1 : options[type] - 1,
+      };
+    });
+  };
 
   return (
     <div className="header">
@@ -57,41 +72,23 @@ const Header = () => {
         </p>
         <Buttons className={"header-btn"} text={"Sign in / Register"} />
         <div className="header-search">
-          <div className="header-search-item">
-            <FontAwesomeIcon icon={faBed} className="header-icon" />
-            <input
-              type="text"
-              placeholder="where are you going"
-              className="header-search-input"
-            />
-          </div>
+            
+          <Header_Search_Where />
 
-          <div className="header-search-item">
-            <FontAwesomeIcon icon={faCalendarDays} className="header-icon" />
-            <span
-              onClick={() => setOpenDate(!openDate)}
-              className="header-search-text"
-            >{`${format(date[0]?.startDate, "MM/dd/yyy")} to ${format(
-              date[0]?.endDate,
-              "MM/dd/yyy"
-            )}`}</span>
-            {openDate && (
-              <DateRange
-                editableDateInputs={true}
-                onChange={(item) => setDate([item.selection])}
-                moveRangeOnFirstSelection={false}
-                ranges={date}
-                className="date"
-              />
-            )}
-          </div>
+          <Header_Search_Date
+            date={date}
+            format={format}
+            openDate={openDate}
+            setOpenDate={setOpenDate}
+            setDate={setDate}
+          />
 
-          <div className="header-search-item">
-            <FontAwesomeIcon icon={faPerson} className="header-icon" />
-            <span className="header-search-text">
-              2 adults 2 children 1 room
-            </span>
-          </div>
+          <Header_Search_Options
+            handleChange={handleChange}
+            openOptions={openOptions}
+            options={options}
+            setOpenOptions={setOpenOptions}
+          />
 
           <div className="header-search-item">
             <Buttons className={"header-btn"} text={"Search"} />
