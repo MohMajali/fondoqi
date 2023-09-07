@@ -1,21 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Header.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
   faCar,
   faPlane,
   faTaxi,
 } from "@fortawesome/free-solid-svg-icons";
-import Buttons from "../Button/Buttons";
 import { useState } from "react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import Header_Search_Options from "./Header_Search_Options";
-import Header_Search_Date from "./Header_Search_Date";
-import Header_Search_Where from "./Header_Search_Where";
+import Non_Header_List from "./Non_Header_List";
 
-const Header = () => {
+const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -42,7 +39,11 @@ const Header = () => {
 
   return (
     <div className="header">
-      <div className="header-container">
+      <div
+        className={
+          type === "list" ? "header-container list-mode" : "header-container"
+        }
+      >
         <div className="header-list">
           <div className="header-list-item active">
             <FontAwesomeIcon icon={faBed} />
@@ -65,35 +66,20 @@ const Header = () => {
             <span>Airport taxis</span>
           </div>
         </div>
-        <h1 className="header-title">A lifetime of discounts? It's Genius</h1>
-        <p className="header-desc">
-          lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem
-          lorem lorem lorem lorem lorem lorem lorem lorem
-        </p>
-        <Buttons className={"header-btn"} text={"Sign in / Register"} />
-        <div className="header-search">
-            
-          <Header_Search_Where />
 
-          <Header_Search_Date
+        {type !== "list" && (
+          <Non_Header_List
             date={date}
             format={format}
-            openDate={openDate}
-            setOpenDate={setOpenDate}
-            setDate={setDate}
-          />
-
-          <Header_Search_Options
             handleChange={handleChange}
+            openDate={openDate}
             openOptions={openOptions}
             options={options}
+            setDate={setDate}
+            setOpenDate={setOpenDate}
             setOpenOptions={setOpenOptions}
           />
-
-          <div className="header-search-item">
-            <Buttons className={"header-btn"} text={"Search"} />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

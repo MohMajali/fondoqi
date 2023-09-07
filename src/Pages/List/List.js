@@ -1,7 +1,10 @@
-import React from 'react'
+import React from "react";
+import Header from "../../components/Header/Header";
 
 export const List = () => {
   return (
-    <div>List</div>
-  )
-}
+    <div>
+      <Header type={"list"} />
+    </div>
+  );
+};
