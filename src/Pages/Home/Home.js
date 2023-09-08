@@ -3,7 +3,7 @@ import Featured from "../../components/Featured/Featured";
 import Header from "../../components/Header/Header";
 import ProertyList from "../../components/ProertyList/ProertyList";
 import FeaturedProperities from "../../components/FeaturedProperities/FeaturedProperities";
-import MailList from "../../MailList/MailList";
+import MailList from "../../components/MailList/MailList";
 
 export const Home = () => {
   return (

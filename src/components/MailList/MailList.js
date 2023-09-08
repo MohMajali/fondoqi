@@ -1,4 +1,4 @@
-import Buttons from "../components/Button/Buttons";
+import Buttons from "../Button/Buttons";
 import "./MailList.css";
 
 const MailList = () => {
