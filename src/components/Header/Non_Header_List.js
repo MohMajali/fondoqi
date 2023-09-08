@@ -14,6 +14,8 @@ const Non_Header_List = ({
   openOptions,
   options,
   setOpenOptions,
+  handleSreach,
+  setDestination,
 }) => {
   return (
     <>
@@ -24,7 +26,7 @@ const Non_Header_List = ({
       </p>
       <Buttons className={"header-btn"} text={"Sign in / Register"} />
       <div className="header-search">
-        <Header_Search_Where />
+        <Header_Search_Where onChange={(e) => setDestination(e.target.value)} />
 
         <Header_Search_Date
           date={date}
@@ -42,7 +44,11 @@ const Non_Header_List = ({
         />
 
         <div className="header-search-item">
-          <Buttons className={"header-btn"} text={"Search"} />
+          <Buttons
+            className={"header-btn"}
+            text={"Search"}
+            onClick={handleSreach}
+          />
         </div>
       </div>
     </>

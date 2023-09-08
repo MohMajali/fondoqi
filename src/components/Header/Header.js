@@ -11,9 +11,12 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import Non_Header_List from "./Non_Header_List";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ type }) => {
+  const navigate = useNavigate();
   const [openDate, setOpenDate] = useState(false);
+  const [destination, setDestination] = useState("");
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -35,6 +38,10 @@ const Header = ({ type }) => {
         [type]: op === "i" ? options[type] + 1 : options[type] - 1,
       };
     });
+  };
+
+  const handleSreach = () => {
+    navigate("/hotels", { state: { destination, date, options } });
   };
 
   return (
@@ -70,6 +77,7 @@ const Header = ({ type }) => {
         {type !== "list" && (
           <Non_Header_List
             date={date}
+            setDestination={setDestination}
             format={format}
             handleChange={handleChange}
             openDate={openDate}
@@ -78,6 +86,7 @@ const Header = ({ type }) => {
             setDate={setDate}
             setOpenDate={setOpenDate}
             setOpenOptions={setOpenOptions}
+            handleSreach={handleSreach}
           />
         )}
       </div>
